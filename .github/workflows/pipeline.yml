@@ -1,0 +1,30 @@
+name: Auto Merge Staging to Main
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          persist-credentials: false  # Disable default GITHUB_TOKEN
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Fetch and merge staging into main
+        run: |
+          git remote add auth-origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch auth-origin staging
+          git merge auth-origin/staging --allow-unrelated-histories --no-ff -m "Auto merge staging into main [skip ci]"
+
+      - name: Push changes to main
+        run: git push auth-origin HEAD:main
