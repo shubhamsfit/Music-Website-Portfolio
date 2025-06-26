@@ -31,4 +31,4 @@ jobs:
         run: git push origin main
         env:
           # Use GitHub token to authenticate push
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
