@@ -8,27 +8,23 @@ on:
 jobs:
   merge:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # <-- THIS LINE gives push access
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v3
         with:
           ref: main
-          persist-credentials: true
+          persist-credentials: false  # Disable default GITHUB_TOKEN
 
-      - name: Configure git user
+      - name: Configure Git
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Merge staging into main
+      - name: Fetch and merge staging into main
         run: |
-          git fetch origin staging
-          git merge origin/staging --allow-unrelated-histories --no-ff -m "Auto merge staging into main [skip ci]"
+          git remote add auth-origin https://x-access-token:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
+          git fetch auth-origin staging
+          git merge auth-origin/staging --allow-unrelated-histories --no-ff -m "Auto merge staging into main [skip ci]"
 
       - name: Push changes to main
-        run: git push origin main
-        env:
-          # Use GitHub token to authenticate push
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: git push auth-origin HEAD:main
