@@ -367,3 +367,33 @@ input[type="text"]::placeholder {
   }
 }
 
+@media (max-width: 650px) and (orientation: portrait) {
+
+.letter input, .letter button{
+   font-size: 1rem !important;
+ 
+}
+.letter h1{
+  font-size: x-large;
+}
+#footer h1{
+  font-size: x-large;
+}
+.social-icons a{
+  font-size: small !important;
+}
+
+}
+
+@media (max-width: 420px) and (orientation: portrait) {
+
+.letter input, .letter button{
+   font-size: 0.8rem !important;
+ 
+}
+.social-icons a{
+  font-size: x-small !important;
+}
+
+}
+
