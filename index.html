@@ -22,7 +22,13 @@
         <a href="#section3" title="About Me"><i class="fab fa-teamspeak fa-2x"></i></a>
         <a href="#footer" title="Contact Me" id="contact"><i class="fas fa-mobile-alt fa-2x"></i></a>
         <!-- <a href="login.html" title="Login" id="login"><i class="fas fa-sign-in-alt"></i></a> -->
+         
+
      </nav>
+
+     
+
+
 
      
 
@@ -55,7 +61,42 @@
         <a href="#" onclick="changeVideo('xJLWX3dWRJQ?si=dL9WPvKzBpkyvhH_')">Music 19 <i class="fas fa-play-circle"></i></a>
         <a href="#" onclick="changeVideo('xJLWX3dWRJQ?si=dL9WPvKzBpkyvhH_')">Music 20 <i class="fas fa-play-circle"></i></a>
         </div>
-    
+        
+        <div class="background-music">
+        <audio id="bg-music" src="your-audio.mp3" preload="auto"></audio>
+         <button id="music-btn" onclick="toggleMusic()">Play Music</button>
+        <button onclick="lowerVolume()">🔉 Lower Volume</button>
+        <button onclick="increaseVolume()">🔊 Increase Volume</button>
+        </div>
+
+        <script>
+ const audio = document.getElementById('bg-music');
+  const btn = document.getElementById('music-btn');
+
+  // Set default volume to 50%
+  audio.volume = 0.5;
+
+  function toggleMusic() {
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = 'Pause Music';
+    } else {
+      audio.pause();
+      btn.textContent = 'Play Music';
+    }
+  }
+
+  function lowerVolume() {
+    audio.volume = Math.max(audio.volume - 0.1, 0); // Decrease volume by 10%
+    console.log(`Volume: ${Math.round(audio.volume * 100)}%`);
+  }
+
+  function increaseVolume() {
+    audio.volume = Math.min(audio.volume + 0.1, 1); // Increase volume by 10%
+    console.log(`Volume: ${Math.round(audio.volume * 100)}%`);
+  }
+</script>
+
      </div>
      <div id="section2">
         
